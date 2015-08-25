@@ -22,5 +22,21 @@ namespace APItemsWinRate.Models
             { "Morellonomicon", 3165 },
             { "Athenes", 3174 }
         };
+
+        public static Dictionary<int, string> ItemsNames = new Dictionary<int, string>
+        {
+            { 3089, "Rabadon's Deathcap" },
+            { 3157, "Zhonya's Hourglass" },
+            { 3285, "Luden's Echo" },
+            { 3116, "Rylai's Scepter" },
+            { 3040, "Seraph's Embrace" },
+            { 3027, "Rod of Ages" },
+            { 3151, "Liandry's Torment" },
+            { 3135, "Void Staff" },
+            { 3115, "Nashor's Tooth" },
+            { 3152, "Will of the Ancients"},
+            { 3165, "Morellonomicon" },
+            { 3174, "Athene's Unholy Grail" }
+        };
     }
 }

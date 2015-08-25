@@ -12,22 +12,24 @@ using System.Text.RegularExpressions;
 using APItemsWinRate.Models;
 using System.Threading;
 using APItemsWinRate.Infrastructure;
+using System.Configuration;
 
 namespace InitialDataUpload
 {
     class DataUpload
     {
-        public DataUpload(string dataurl, string apiKey)
+        public DataUpload(string dataurl)
         {
-            ApiKey = apiKey;
             DataUrl = dataurl;
             fileNames = Directory.GetFiles(DataUrl, "*.json")
                                     .Select(path => Path.GetFileName(path))
                                     .ToList();
 
-            IDMatches = new List<string>();
+            IDMatches = new Queue<string>();
             Matches = new List<APItemsWinRate.Models.Match>();
             Context = new AppDbContext();
+
+            ServicePointManager.DefaultConnectionLimit = 10000;
         }
 
         public void ParseJsonFiles()
@@ -36,36 +38,75 @@ namespace InitialDataUpload
             {
                 var fileids = DeserializeFile(filename);
 
-                // Taking the first 100 elements to avoid the rate limitation of requests to the api
-                // remove this later
-                IDMatches.AddRange(fileids.Take(20));
+                foreach(string id in fileids.Take(100))
+                {
+                    IDMatches.Enqueue(id);
+                }
             }
+        }
+
+        public IEnumerable<string> TakeAndRemove(Queue<string> queue, int count)
+        {
+            var list = new List<string>();
+            for (int i = 0; i < Math.Min(queue.Count, count); i++)
+                list.Add(queue.Dequeue());
+
+            return list;
         }
 
         public void GetDataFromUrl()
         {
-            var regex = new Regex(@"^([0-9].11)");
-            foreach (string matchId in IDMatches)
-            {            
-                var matchData = GetMatchData(matchId);
+            int howManyRequestsAtATime = 100;
+            HttpSocket socket = new HttpSocket();
+            var matchDataList = new List<MatchData>();
 
-                if (matchData != null)
-                {
-                    Console.WriteLine("Requested match {0} out of {1}", ++matchesRequested, IDMatches.Count);
-                    AddMatch(regex, matchData);
-                }
-                else
-                {
-                    Console.WriteLine("Error on the request, requesting the next match");
-                }
+            while (IDMatches.Count > 0)
+            {
+                var idMatches = TakeAndRemove(IDMatches, howManyRequestsAtATime);
 
-                Thread.Sleep(1000);
+                var urls = GetListOfUrls(idMatches);
+                var tasks = urls.Select(socket.GetAsync).ToArray();
+                var completed = Task.Factory.ContinueWhenAll(tasks, completedTasks =>
+                                    {
+                                        foreach (var result in completedTasks.Select(t => t.Result))
+                                        {
+                                            if (!string.IsNullOrEmpty(result))
+                                            {
+                                                MatchData match = JsonConvert.DeserializeObject<MatchData>(result);
+                                                matchDataList.Add(match);
+                                            }
+                                        }
+                                    });
+                completed.Wait();
             }
 
+            foreach(MatchData match in matchDataList)
+            {
+                if(match != null)
+                {
+                    AddMatch(match);
+                }
+            }
         }
 
-        private void AddMatch(Regex regex, MatchData matchData)
+        private List<string> GetListOfUrls(IEnumerable<string> idMatches)
         {
+            List<string> urls = new List<string>();
+
+            foreach(string id in idMatches)
+            {
+                // quitar de aqui
+                string apiKey = "6cc6ef26-27c2-4cd4-bcc0-bbeabdd8feaa";
+                string requestUri = String.Format("https://lan.api.pvp.net/api/lol/lan/v2.2/match/{0}?api_key={1}", id, apiKey);
+                urls.Add(requestUri);
+            }
+
+            return urls;
+        }
+
+        private void AddMatch(MatchData matchData)
+        {
+            var regex = new Regex(@"^([0-9].11)");
             var match = new APItemsWinRate.Models.Match();
             match.MatchId = matchData.matchId;
             match.Is_Ranked = matchData.queueType.Equals("RANKED_SOLO_5x5");
@@ -100,35 +141,6 @@ namespace InitialDataUpload
             Matches.Add(match);
         }
 
-        private MatchData GetMatchData(string matchId)
-        {
-            try
-            {
-                string requestUri = String.Format("https://lan.api.pvp.net/api/lol/lan/v2.2/match/{0}?api_key={1}", matchId, ApiKey);
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(requestUri);
-                httpWebRequest.ContentType = "application/json; charset=utf-8";
-                httpWebRequest.Method = WebRequestMethods.Http.Get;
-                httpWebRequest.Accept = "application/json";
-                httpWebRequest.Proxy = null;
-                WebResponse response = httpWebRequest.GetResponse();
-
-                string json;
-
-                using (var sr = new StreamReader(response.GetResponseStream()))
-                {
-                    json = sr.ReadToEnd();
-                }
-
-                MatchData match = JsonConvert.DeserializeObject<MatchData>(json);
-
-                return match;
-            }
-            catch(Exception e)
-            {
-                return null;
-            }
-        }
-
         private IEnumerable<string> DeserializeFile(string filename)
         {
             // read file into a string and deserialize JSON to a type
@@ -139,9 +151,8 @@ namespace InitialDataUpload
 
         private int matchesRequested = 0;
         private string DataUrl { get; set; }
-        private string ApiKey { get; set; }
         private IEnumerable<string> fileNames { get; set; }
-        private List<string> IDMatches { get; set; }
+        private Queue<string> IDMatches { get; set; }
         public List<APItemsWinRate.Models.Match> Matches { get; set; }
         public AppDbContext Context { get; set; }
 
@@ -169,6 +180,7 @@ namespace InitialDataUpload
             {"GOLD", Rank.GOLD},
             {"PLATINUM", Rank.PLATINUM},
             {"DIAMOND", Rank.DIAMOND},
+            {"MASTER", Rank.MASTER},
             {"CHALLENGER", Rank.CHALLENGER}
         };
     }

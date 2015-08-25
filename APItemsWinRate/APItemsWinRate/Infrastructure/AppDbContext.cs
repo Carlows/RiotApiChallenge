@@ -1,4 +1,5 @@
 ﻿using APItemsWinRate.Models;
+using APItemsWinRate.Models.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -29,13 +30,19 @@ namespace APItemsWinRate.Infrastructure
         public DbSet<AllItemsRecord> AllItemsRecords { get; set; }
         public DbSet<ChampionRecord> ChampionRecords { get; set; }
         public DbSet<ItemRecord> ItemRecords { get; set; }
+        public DbSet<ItemData> Items { get; set; }
+        public DbSet<Data> Data { get; set; }
+        public DbSet<Gold> Gold { get; set; }
+        public DbSet<CalculatedRecord> CalculatedRecord { get; set; }
+        public DbSet<DataItem> CalculatedDataItem { get; set; }
+        public DbSet<DataChampion> CalculatedDataChampion { get; set; }
     }
 
     public class DbInitializer : DropCreateDatabaseIfModelChanges<AppDbContext>
     {
         protected override void Seed(AppDbContext context)
         {
-            // Geting champions data
+            // Getting champions data
             var champions = GetChampionsData();
 
             foreach(Champion champ in champions)
@@ -44,8 +51,73 @@ namespace APItemsWinRate.Infrastructure
                 context.SaveChanges();
             }
 
+            // Getting items data
+            foreach (var key in APItems.Items.Keys)
+            {
+                ItemData item = new ItemData();
+
+                var dataPrePatch = GetItemData(APItems.Items[key], "5.11.1");
+                var dataPostPatch = GetItemData(APItems.Items[key], "5.14.1");
+                item.ItemId = int.Parse(dataPrePatch.id);
+
+                var preChangeData = new Data
+                {
+                    Name = dataPrePatch.name,
+                    Plaintext = dataPrePatch.plaintext,
+                    Description = dataPrePatch.description,
+                    From = string.Join(",", dataPrePatch.from),
+                    Gold = new Gold
+                    {
+                        Base = dataPrePatch.gold.Base,
+                        Total = dataPrePatch.gold.total
+                    }
+                };
+
+                var postChangeData = new Data
+                {
+                    Name = dataPostPatch.name,
+                    Plaintext = dataPostPatch.plaintext,
+                    Description = dataPostPatch.description,
+                    From = string.Join(",", dataPostPatch.from),
+                    Gold = new Gold
+                    {
+                        Base = dataPostPatch.gold.Base,
+                        Total = dataPostPatch.gold.total
+                    }
+                };
+
+                item.DataPreChange = preChangeData;
+                item.DataPostChange = postChangeData;
+
+                context.Items.Add(item);
+                context.SaveChanges();
+            }
+
 
             base.Seed(context);
+        }
+
+        private ItemDataRequest GetItemData(int itemId, string version)
+        {
+            string apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["ApiKey"];
+            string requestUri = String.Format("https://global.api.pvp.net/api/lol/static-data/na/v1.2/item/{0}?version={1}&itemData=from,gold,stats&api_key={2}", itemId, version, apiKey);
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(requestUri);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = WebRequestMethods.Http.Get;
+            httpWebRequest.Accept = "application/json";
+            httpWebRequest.Proxy = null;
+            WebResponse response = httpWebRequest.GetResponse();
+
+            string json;
+
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                json = sr.ReadToEnd();
+            }
+
+            ItemDataRequest data = JsonConvert.DeserializeObject<ItemDataRequest>(json);
+
+            return data;
         }
 
         private List<Champion> GetChampionsData()

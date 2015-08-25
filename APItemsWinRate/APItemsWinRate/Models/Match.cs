@@ -32,7 +32,8 @@ namespace APItemsWinRate.Models
         GOLD = 3,
         PLATINUM = 4,
         DIAMOND = 5,
-        CHALLENGER = 6
+        MASTER = 6,
+        CHALLENGER = 7
     }
 
     public enum Region

@@ -27,3 +27,8 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialData
 C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\WebGrease.dll
 C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\Antlr3.Runtime.dll
 C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\Antlr3.Runtime.pdb
+C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\Ninject.Web.Common.dll
+C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\Ninject.dll
+C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\WebActivatorEx.dll
+C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\Ninject.Web.Common.xml
+C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\InitialDataUpload\bin\Debug\Ninject.xml

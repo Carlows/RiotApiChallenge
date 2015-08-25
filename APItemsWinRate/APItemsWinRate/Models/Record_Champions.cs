@@ -18,7 +18,7 @@ namespace APItemsWinRate.Models
     {
         public int Id { get; set; }
 
-        public int ChampionId { get; set; } 
+        public int ChampionId { get; set; }
 
         // # of times each item was bought by this champion
         public virtual AllItemsRecord ItemsRecord { get; set; }
