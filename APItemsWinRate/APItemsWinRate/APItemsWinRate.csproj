@@ -130,7 +130,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\StatsByChampionController.cs" />
     <Compile Include="Controllers\StatsByItemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -143,6 +142,7 @@
     <Compile Include="Models\Champion.cs" />
     <Compile Include="Models\DataChampion.cs" />
     <Compile Include="Models\DataItem.cs" />
+    <Compile Include="Models\DataPerRank.cs" />
     <Compile Include="Models\ItemData.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\Player.cs" />

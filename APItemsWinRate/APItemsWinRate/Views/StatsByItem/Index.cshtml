@@ -86,6 +86,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body text-center">
+                                            <h3>Usage by Rank</h3>
+                                            <canvas class="chart chart-bar" data="currentItem.ItemDataByRankPrePatchData" labels="currentItem.ItemDataByRankPrePatchLabels" colours="barChartOptions.colours" options="barChartOptions.options"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="centerPanel" ng-show="dataPostChange">
                             <div class="row">
@@ -132,6 +142,16 @@
                                         <div class="panel-body text-center">
                                             <h3>Most used on</h3>
                                             <canvas class="chart chart-doughnut" data="currentItem.MostUsedChampionsPostPatchData" labels="currentItem.MostUsedChampionsPostPatchLabels" legend="true" options="chartOptions"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body text-center">
+                                            <h3>Usage by Rank</h3>
+                                            <canvas class="chart chart-bar" data="currentItem.ItemDataByRankPostPatchData" labels="currentItem.ItemDataByRankPostPatchLabels" colours="barChartOptions.colours" options="barChartOptions.options"></canvas>
                                         </div>
                                     </div>
                                 </div>

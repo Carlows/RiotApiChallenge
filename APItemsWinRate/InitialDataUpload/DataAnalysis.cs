@@ -134,17 +134,7 @@ namespace InitialDataUpload
             foreach (var key in APItems.Items.Keys)
             {
                 var iditem = APItems.Items[key];
-
-                var playersThatUsedAPChampionsPreChange = _matches.Where(m => m.Pre_Change == true).SelectMany(ma => ma.Players).Where(p => champions.Contains(p.ChampionUsed.ChampionId)).ToList().Count;
-                var playersThatUsedAPChampionsPostChange = _matches.Where(m => m.Pre_Change == false).SelectMany(ma => ma.Players).Where(p => champions.Contains(p.ChampionUsed.ChampionId)).ToList().Count;
-                var itemRecords = data.RecordsByChampions
-                                .ChampionsRecords
-                                .Where(r => champions.Contains(r.ChampionId))
-                                .Select(c => c.ItemsRecord)
-                                .SelectMany(ir => ir.Items)
-                                .Where(i => i.ItemID == iditem)
-                                .ToList();
-
+                               
                 List<Tuple<ChampionRecord, float, float>> dataPerChampion = new List<Tuple<ChampionRecord, float, float>>();
                 foreach (int champId in champions)
                 {
@@ -181,14 +171,62 @@ namespace InitialDataUpload
                     Value = m.Item3
                 }).ToList();
 
+                var playersThatUsedAPChampionsPreChange = _matches.Where(m => m.Pre_Change == true).SelectMany(ma => ma.Players).Where(p => champions.Contains(p.ChampionUsed.ChampionId)).ToList();
+                var playersThatUsedAPChampionsPostChange = _matches.Where(m => m.Pre_Change == false).SelectMany(ma => ma.Players).Where(p => champions.Contains(p.ChampionUsed.ChampionId)).ToList();
+                var playersThatUsedAPChampionsPreChangeCount = playersThatUsedAPChampionsPreChange.Count;
+                var playersThatUsedAPChampionsPostChangeCount = playersThatUsedAPChampionsPostChange.Count;
+
+                 var itemRecords = data.RecordsByChampions
+                                .ChampionsRecords
+                                .Where(r => champions.Contains(r.ChampionId))
+                                .Select(c => c.ItemsRecord)
+                                .SelectMany(ir => ir.Items)
+                                .Where(i => i.ItemID == iditem)
+                                .ToList();
+
+
+                var listUsePerRankPrePatch = new List<DataPerRank>();
+                var listUsePerRankPostPatch = new List<DataPerRank>();
+                foreach (Rank rank in Enum.GetValues(typeof(Rank)))
+                {
+                    var playersInRankPreChangeCount = playersThatUsedAPChampionsPreChange.Where(p => p.Rank == rank).ToList().Count;
+                    var playersInRankPostChangeCount = playersThatUsedAPChampionsPostChange.Where(p => p.Rank == rank).ToList().Count;
+                    var playersThatBoughtThisItemInRankPreChangeCount = playersThatUsedAPChampionsPreChange
+                                                                        .Where(p => p.ItemsBought
+                                                                        .Contains(APItems.Items[key].ToString()) && p.Rank == rank)
+                                                                        .ToList()
+                                                                        .Count;
+                    var playersThatBoughtThisItemInRankPostChangeCount = playersThatUsedAPChampionsPostChange
+                                                                        .Where(p => p.ItemsBought
+                                                                        .Contains(APItems.Items[key].ToString()) && p.Rank == rank)
+                                                                        .ToList()
+                                                                        .Count;
+
+                    DataPerRank dataPrePatch = new DataPerRank()
+                    {
+                        Rank = rank.ToString(),
+                        Data = playersInRankPreChangeCount != 0 ? Convert.ToInt32((playersThatBoughtThisItemInRankPreChangeCount /(float)playersInRankPreChangeCount) * 100f) : 0
+                    };
+
+                    DataPerRank dataPostPatch = new DataPerRank()
+                    {
+                        Rank = rank.ToString(),
+                        Data = playersInRankPostChangeCount != 0 ? Convert.ToInt32((playersThatBoughtThisItemInRankPostChangeCount / (float)playersInRankPostChangeCount) * 100f) : 0
+                    };
+
+                    listUsePerRankPrePatch.Add(dataPrePatch);
+                    listUsePerRankPostPatch.Add(dataPostPatch);
+                }
+
+               
                 var item = new ItemRecord()
                 {
                     PreChangeRecord = itemRecords.Select(i => i.PreChangeRecord).Sum(),
                     PostChangeRecord = itemRecords.Select(i => i.PostChangeRecord).Sum()
                 };
 
-                int percentagePrePatch = Convert.ToInt32((item.PreChangeRecord / (float)playersThatUsedAPChampionsPreChange) * 100f);
-                int percentagePostPatch = Convert.ToInt32((item.PostChangeRecord / (float)playersThatUsedAPChampionsPostChange) * 100f);
+                int percentagePrePatch = Convert.ToInt32((item.PreChangeRecord / (float)playersThatUsedAPChampionsPreChangeCount) * 100f);
+                int percentagePostPatch = Convert.ToInt32((item.PostChangeRecord / (float)playersThatUsedAPChampionsPostChangeCount) * 100f);
                 string itemName = APItems.ItemsNames[iditem];
                 dataItemItems.Add(new DataItem
                 {
@@ -197,7 +235,9 @@ namespace InitialDataUpload
                     PrePatch = percentagePrePatch,
                     PostPatch = percentagePostPatch,
                     MostUsedChampionsPrePatch = listMostUsedPreChange,
-                    MostUsedChampionsPostPatch = listMostUsedPostChange                   
+                    MostUsedChampionsPostPatch = listMostUsedPostChange,
+                    DataPerRankPrePatch = listUsePerRankPrePatch,
+                    DataPerRankPostPatch = listUsePerRankPostPatch
                 });
             }
 

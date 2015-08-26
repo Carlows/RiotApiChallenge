@@ -38,7 +38,11 @@ namespace APItemsWinRate.Controllers
                 MostUsedChampionsPrePatchData = i.MostUsedChampionsPrePatch.Select(c => Convert.ToInt32(c.Value)).ToArray(),
                 MostUsedChampionsPrePatchLabels = i.MostUsedChampionsPrePatch.Select(c => c.Name).ToArray(),
                 MostUsedChampionsPostPatchData = i.MostUsedChampionsPostPatch.Select(c => Convert.ToInt32(c.Value)).ToArray(),
-                MostUsedChampionsPostPatchLabels = i.MostUsedChampionsPostPatch.Select(c => c.Name).ToArray(),                
+                MostUsedChampionsPostPatchLabels = i.MostUsedChampionsPostPatch.Select(c => c.Name).ToArray(),
+                ItemDataByRankPrePatchLabels = i.DataPerRankPrePatch.Select(d => d.Rank).ToArray().ToArray(),
+                ItemDataByRankPrePatchData = i.DataPerRankPrePatch.Select(d => d.Data).ToArray().ToArray(),
+                ItemDataByRankPostPatchLabels = i.DataPerRankPostPatch.Select(d => d.Rank).ToArray().ToArray(),
+                ItemDataByRankPostPatchData = i.DataPerRankPostPatch.Select(d => d.Data).ToArray().ToArray(),
                 Data = items.Where(item => item.ItemId == i.ItemId).Select(item => new ItemDataViewModel()
                 {
                     Id = item.Id,

@@ -36,6 +36,7 @@ namespace APItemsWinRate.Infrastructure
         public DbSet<CalculatedRecord> CalculatedRecord { get; set; }
         public DbSet<DataItem> CalculatedDataItem { get; set; }
         public DbSet<DataChampion> CalculatedDataChampion { get; set; }
+        public DbSet<DataPerRank> DataPerRank { get; set; }
     }
 
     public class DbInitializer : DropCreateDatabaseIfModelChanges<AppDbContext>

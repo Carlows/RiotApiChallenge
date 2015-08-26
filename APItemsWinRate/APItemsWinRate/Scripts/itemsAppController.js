@@ -2,7 +2,19 @@
 
 app.controller("itemsAppController", function ($scope, $timeout, itemsData, $filter) {
     
-    $scope.items = itemsData.Items;
+    $scope.items;
+
+    prepareItemsForChart();
+
+    function prepareItemsForChart() {
+        $scope.items = itemsData.Items.map(function (item) {
+            var modified = item;
+            modified.ItemDataByRankPrePatchData = new Array(item.ItemDataByRankPrePatchData);
+            modified.ItemDataByRankPostPatchData = new Array(item.ItemDataByRankPostPatchData);
+
+            return modified;
+        });
+    };
 
     $scope.options = {
         readOnly: true,
@@ -16,6 +28,9 @@ app.controller("itemsAppController", function ($scope, $timeout, itemsData, $fil
         }
     };
 
+    $scope.data = [[10, 20, 30, 40]];
+    $scope.labels = ["A", "B", "C", "D"];
+    
     $scope.itemSelected = false;
     $scope.dataPreChange = true;
     $scope.dataPostChange = false;
@@ -50,5 +65,32 @@ app.controller("itemsAppController", function ($scope, $timeout, itemsData, $fil
 
     $scope.chartOptions = {
         tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%"
-    }
+    };
+
+    $scope.barChartOptions = {
+        "colours": [{ // default
+            "fillColor": "rgba(255,70,74,0.7)",
+            "strokeColor": "rgba(215,100,103,1)",
+            "pointColor": "rgba(210,70,74,1)",
+            "pointStrokeColor": "#fff",
+            "pointHighlightFill": "#fff",
+            "pointHighlightStroke": "rgba(151,187,205,0.8)"
+        }],
+        "options": {
+            // Boolean - If we want to override with a hard coded scale
+            scaleOverride: true,
+            scaleLabel: "<%=value%>%",
+            // ** Required if scaleOverride is true **
+            // Number - The number of steps in a hard coded scale
+            scaleSteps: 10,
+            // Number - The value jump in the hard coded scale
+            scaleStepWidth: 10,
+            // Number - The scale starting value
+            scaleStartValue: 0,
+            barValueSpacing: 20,
+            scaleShowGridLines: true,
+            scaleFontSize: 10,
+            tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%"
+        }
+    };
 });

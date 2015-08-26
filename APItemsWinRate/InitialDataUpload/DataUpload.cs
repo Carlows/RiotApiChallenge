@@ -38,7 +38,7 @@ namespace InitialDataUpload
             {
                 var fileids = DeserializeFile(filename);
 
-                foreach(string id in fileids.Take(100))
+                foreach(string id in fileids)
                 {
                     IDMatches.Enqueue(id);
                 }
@@ -60,6 +60,7 @@ namespace InitialDataUpload
             HttpSocket socket = new HttpSocket();
             var matchDataList = new List<MatchData>();
 
+            Console.WriteLine("Total matches to request: {0}", IDMatches.Count);
             while (IDMatches.Count > 0)
             {
                 var idMatches = TakeAndRemove(IDMatches, howManyRequestsAtATime);
@@ -96,7 +97,7 @@ namespace InitialDataUpload
             foreach(string id in idMatches)
             {
                 // quitar de aqui
-                string apiKey = "6cc6ef26-27c2-4cd4-bcc0-bbeabdd8feaa";
+                string apiKey = ConfigurationManager.AppSettings["apiKey"];
                 string requestUri = String.Format("https://lan.api.pvp.net/api/lol/lan/v2.2/match/{0}?api_key={1}", id, apiKey);
                 urls.Add(requestUri);
             }

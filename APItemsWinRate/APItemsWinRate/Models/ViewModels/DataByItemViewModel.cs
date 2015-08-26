@@ -18,9 +18,15 @@ namespace APItemsWinRate.Models.ViewModels
         public float PostPatch { get; set; }
 
         public string[] MostUsedChampionsPrePatchLabels { get; set; }
-        public int[] MostUsedChampionsPrePatchData { get; set; }
         public string[] MostUsedChampionsPostPatchLabels { get; set; }
+        public int[] MostUsedChampionsPrePatchData { get; set; }
         public int[] MostUsedChampionsPostPatchData { get; set; }
+
+        // By rank
+        public string[] ItemDataByRankPrePatchLabels { get; set; }
+        public string[] ItemDataByRankPostPatchLabels { get; set; }
+        public int[] ItemDataByRankPrePatchData { get; set; }
+        public int[] ItemDataByRankPostPatchData { get; set; }
 
         public ItemDataViewModel Data { get; set; }
     }
