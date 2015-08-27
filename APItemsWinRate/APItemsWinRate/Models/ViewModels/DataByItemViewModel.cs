@@ -28,6 +28,12 @@ namespace APItemsWinRate.Models.ViewModels
         public int[] ItemDataByRankPrePatchData { get; set; }
         public int[] ItemDataByRankPostPatchData { get; set; }
 
+        // By region
+        public string[] ItemDataByRegionPrePatchLabels { get; set; }
+        public string[] ItemDataByRegionPostPatchLabels { get; set; }
+        public int[] ItemDataByRegionPrePatchData { get; set; }
+        public int[] ItemDataByRegionPostPatchData { get; set; }
+
         public ItemDataViewModel Data { get; set; }
     }
 }

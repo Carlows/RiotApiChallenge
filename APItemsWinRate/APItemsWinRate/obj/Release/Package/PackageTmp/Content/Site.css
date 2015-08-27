@@ -1,0 +1,190 @@
+﻿body {
+    margin-top:50px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.jumbotron-transparent{
+    background-color: rgba(230, 230, 230, 0.5);
+}
+
+.custom-list{
+    margin-bottom:0px;
+}
+
+.img-cursor{
+    cursor:pointer;
+}
+
+.custom-panel{
+    background-color:rgba(34, 34, 34, 0.8);
+    border-color:rgba(34, 34, 34, 0.8);
+}
+
+.nopadding{
+    padding:0px;
+}
+
+.title h2{
+    margin-top:0px;
+}
+
+.title{
+    margin-bottom:25px;
+}
+
+.body-panel{
+    padding:30px;
+}
+
+/* avoid angular braces to show up because the scripts are loading last */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+    display: none !important;
+}
+
+h3{
+    margin-top:0px;
+}
+
+.cv{
+    height:140px;
+}
+
+.header-panel{
+    background-color:#ffffff;
+}
+
+.itemsPageStyles{
+    padding-left:50px;
+    padding-right:50px;
+}
+
+.img-rounded-custom{
+    border-radius:15px;
+}
+
+.container-custom{
+    padding:60px;
+}
+
+.container-custom h1{
+    font-size:38px;
+    margin-top:0px;
+}
+
+.font-list-group{
+    font-size:18px;
+}
+
+.spacer{
+    margin-top:25px;
+}
+
+.transparent{
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.start-jumbo{
+    margin-top:50px;
+}
+
+.fullScreenBackground{
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/* Styles for the fullscreen background video */
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -100;
+}
+
+.fullscreen-bg__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    height: 300%;
+    top: -100%;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    width: 300%;
+    left: -100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .fullscreen-bg {
+  }
+
+  .fullscreen-bg__video {
+    display: none;
+  }
+}
+
+.panelAnimation.ng-enter{
+  -webkit-animation: fadeInRight 0.5s;
+	-moz-animation: fadeInRight 0.5s;
+	-o-animation: fadeInRight 0.5s;
+	animation: fadeInRight 0.5s;
+}
+
+.panelAnimation.ng-leave{
+  -webkit-animation: fadeOutRight 0.5s;
+	-moz-animation: fadeOutRight 0.5s;
+	-o-animation: fadeOutRight 0.5s;
+	animation: fadeOutRight 0.5s;
+}
+
+.centerPanel.ng-hide-add{
+  -webkit-animation: fadeOut 0.4s;
+	-moz-animation: fadeOut 0.4s;
+	-o-animation: fadeOut 0.4s;
+	animation: fadeOut 0.4s;
+}
+
+.centerPanel.ng-hide-remove{
+  -webkit-animation: fadeIn 0.4s;
+	-moz-animation: fadeIn 0.4s;
+	-o-animation: fadeIn 0.4s;
+	animation: fadeIn 0.4s;
+}
+
+.panelAnimation.ng-hide-add{
+  -webkit-animation: fadeInRight 0.5s;
+	-moz-animation: fadeInRight 0.5s;
+	-o-animation: fadeInRight 0.5s;
+	animation: fadeInRight 0.5s;
+}
+
+.panelAnimation.ng-hide-remove{
+  -webkit-animation: fadeOutRight 0.5s;
+	-moz-animation: fadeOutRight 0.5s;
+	-o-animation: fadeOutRight 0.5s;
+	animation: fadeOutRight 0.5s;
+}

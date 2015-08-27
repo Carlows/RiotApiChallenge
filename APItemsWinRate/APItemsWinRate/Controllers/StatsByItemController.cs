@@ -39,10 +39,14 @@ namespace APItemsWinRate.Controllers
                 MostUsedChampionsPrePatchLabels = i.MostUsedChampionsPrePatch.Select(c => c.Name).ToArray(),
                 MostUsedChampionsPostPatchData = i.MostUsedChampionsPostPatch.Select(c => Convert.ToInt32(c.Value)).ToArray(),
                 MostUsedChampionsPostPatchLabels = i.MostUsedChampionsPostPatch.Select(c => c.Name).ToArray(),
-                ItemDataByRankPrePatchLabels = i.DataPerRankPrePatch.Select(d => d.Rank).ToArray().ToArray(),
-                ItemDataByRankPrePatchData = i.DataPerRankPrePatch.Select(d => d.Data).ToArray().ToArray(),
-                ItemDataByRankPostPatchLabels = i.DataPerRankPostPatch.Select(d => d.Rank).ToArray().ToArray(),
-                ItemDataByRankPostPatchData = i.DataPerRankPostPatch.Select(d => d.Data).ToArray().ToArray(),
+                ItemDataByRankPrePatchLabels = i.DataPerRankPrePatch.Select(d => d.Rank).ToArray(),
+                ItemDataByRankPrePatchData = i.DataPerRankPrePatch.Select(d => d.Data).ToArray(),
+                ItemDataByRankPostPatchLabels = i.DataPerRankPostPatch.Select(d => d.Rank).ToArray(),
+                ItemDataByRankPostPatchData = i.DataPerRankPostPatch.Select(d => d.Data).ToArray(),
+                ItemDataByRegionPrePatchLabels = i.DataPerRegionPrePatch.Select(d => d.Region).ToArray(),
+                ItemDataByRegionPrePatchData = i.DataPerRegionPrePatch.Select(d => d.Data).ToArray(),
+                ItemDataByRegionPostPatchLabels = i.DataPerRegionPostPatch.Select(d => d.Region).ToArray(),
+                ItemDataByRegionPostPatchData = i.DataPerRegionPostPatch.Select(d => d.Data).ToArray(),
                 Data = items.Where(item => item.ItemId == i.ItemId).Select(item => new ItemDataViewModel()
                 {
                     Id = item.Id,

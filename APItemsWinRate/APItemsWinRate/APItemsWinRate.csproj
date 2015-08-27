@@ -143,6 +143,7 @@
     <Compile Include="Models\DataChampion.cs" />
     <Compile Include="Models\DataItem.cs" />
     <Compile Include="Models\DataPerRank.cs" />
+    <Compile Include="Models\DataPerRegion.cs" />
     <Compile Include="Models\ItemData.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\Player.cs" />
@@ -162,12 +163,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\mediaelementplayer.css" />
-    <Content Include="Content\Videos\kalista.mp4" />
-    <Content Include="Content\Videos\missfortune.mp4" />
-    <Content Include="Content\Videos\riven.mp4" />
-    <Content Include="Content\Videos\teemo2.mp4" />
-    <Content Include="Content\Videos\teemo.mp4" />
-    <Content Include="Content\Videos\yasuo.mp4" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -176,6 +171,7 @@
     <Content Include="Scripts\backgroundCtrl.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\smarter.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\Chart.js" />

@@ -130,11 +130,13 @@ namespace InitialDataUpload
 
             var data = _context.Records.OrderByDescending(r => r.DateCreated).First();
             var items = _context.Items.ToList();
+
             var champions = APChampions.Champions;
             foreach (var key in APItems.Items.Keys)
             {
                 var iditem = APItems.Items[key];
-                               
+                
+                // Usage by champion (Top 5 champions that used this item the most)
                 List<Tuple<ChampionRecord, float, float>> dataPerChampion = new List<Tuple<ChampionRecord, float, float>>();
                 foreach (int champId in champions)
                 {
@@ -185,6 +187,7 @@ namespace InitialDataUpload
                                 .ToList();
 
 
+                // Usage per rank
                 var listUsePerRankPrePatch = new List<DataPerRank>();
                 var listUsePerRankPostPatch = new List<DataPerRank>();
                 foreach (Rank rank in Enum.GetValues(typeof(Rank)))
@@ -218,7 +221,41 @@ namespace InitialDataUpload
                     listUsePerRankPostPatch.Add(dataPostPatch);
                 }
 
-               
+                // Usage per region
+                var listUsePerRegionPrePatch = new List<DataPerRegion>();
+                var listUsePerRegionPostPatch = new List<DataPerRegion>();
+                foreach (Region region in Enum.GetValues(typeof(Region)))
+                {
+                    var playersInRegionPreChangeCount = playersThatUsedAPChampionsPreChange.Where(p => p.Region == region).ToList().Count;
+                    var playersInRegionPostChangeCount = playersThatUsedAPChampionsPostChange.Where(p => p.Region == region).ToList().Count;
+                    var playersThatBoughtThisItemInRegionPreChangeCount = playersThatUsedAPChampionsPreChange
+                                                                        .Where(p => p.ItemsBought
+                                                                        .Contains(APItems.Items[key].ToString()) && p.Region == region)
+                                                                        .ToList()
+                                                                        .Count;
+                    var playersThatBoughtThisItemInRegionPostChangeCount = playersThatUsedAPChampionsPostChange
+                                                                        .Where(p => p.ItemsBought
+                                                                        .Contains(APItems.Items[key].ToString()) && p.Region == region)
+                                                                        .ToList()
+                                                                        .Count;
+
+                    DataPerRegion dataPrePatch = new DataPerRegion()
+                    {
+                        Region = region.ToString(),
+                        Data = playersInRegionPreChangeCount != 0 ? Convert.ToInt32((playersThatBoughtThisItemInRegionPreChangeCount / (float)playersInRegionPreChangeCount) * 100f) : 0
+                    };
+
+                    DataPerRegion dataPostPatch = new DataPerRegion()
+                    {
+                        Region = region.ToString(),
+                        Data = playersInRegionPostChangeCount != 0 ? Convert.ToInt32((playersThatBoughtThisItemInRegionPostChangeCount / (float)playersInRegionPostChangeCount) * 100f) : 0
+                    };
+
+                    listUsePerRegionPrePatch.Add(dataPrePatch);
+                    listUsePerRegionPostPatch.Add(dataPostPatch);
+                }
+
+                // Total usage
                 var item = new ItemRecord()
                 {
                     PreChangeRecord = itemRecords.Select(i => i.PreChangeRecord).Sum(),
@@ -237,7 +274,9 @@ namespace InitialDataUpload
                     MostUsedChampionsPrePatch = listMostUsedPreChange,
                     MostUsedChampionsPostPatch = listMostUsedPostChange,
                     DataPerRankPrePatch = listUsePerRankPrePatch,
-                    DataPerRankPostPatch = listUsePerRankPostPatch
+                    DataPerRankPostPatch = listUsePerRankPostPatch,
+                    DataPerRegionPrePatch = listUsePerRegionPrePatch,
+                    DataPerRegionPostPatch = listUsePerRegionPostPatch
                 });
             }
 

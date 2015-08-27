@@ -22,6 +22,7 @@ namespace InitialDataUpload
             request.Method = WebRequestMethods.Http.Get;
             request.Accept = "application/json";
             request.Proxy = null;
+            request.Timeout = 3000;
             try
             {
                 request.BeginGetResponse(iar =>
@@ -36,11 +37,18 @@ namespace InitialDataUpload
                             tcs.SetResult(reader.ReadToEnd());
                         }
                     }
-                    catch (Exception exc) { tcs.SetResult(""); }
+                    catch (Exception exc) 
+                    { 
+                        tcs.SetResult(""); 
+                    }
                     finally { if (response != null) response.Close(); }
                 }, null);
             }
-            catch (Exception exc) { tcs.SetResult(""); }
+            catch (Exception exc) 
+            { 
+                tcs.SetResult(""); 
+            }
+
             return tcs.Task;
         }
     }

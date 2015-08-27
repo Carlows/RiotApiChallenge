@@ -25,7 +25,8 @@ namespace InitialDataUpload
                                     .Select(path => Path.GetFileName(path))
                                     .ToList();
 
-            IDMatches = new Queue<string>();
+            // first string for id, second for region
+            IDMatches = new Queue<RegionId>();
             Matches = new List<APItemsWinRate.Models.Match>();
             Context = new AppDbContext();
 
@@ -34,20 +35,29 @@ namespace InitialDataUpload
 
         public void ParseJsonFiles()
         {
+            // matches the [region]_xxx of the file
+            // so the file must be named with the region of the matches first
+            var regex = new Regex(@"^([A-Z]+)");
             foreach (string filename in fileNames)
             {
                 var fileids = DeserializeFile(filename);
-
-                foreach(string id in fileids)
+                System.Text.RegularExpressions.Match match = regex.Match(filename);
+                foreach(string id in fileids.Take(100))
                 {
-                    IDMatches.Enqueue(id);
+                    var regionid = new RegionId()
+                    {
+                        Id = id,
+                        Region = match.Value
+                    };
+
+                    IDMatches.Enqueue(regionid);
                 }
             }
         }
 
-        public IEnumerable<string> TakeAndRemove(Queue<string> queue, int count)
+        public IEnumerable<RegionId> TakeAndRemove(Queue<RegionId> queue, int count)
         {
-            var list = new List<string>();
+            var list = new List<RegionId>();
             for (int i = 0; i < Math.Min(queue.Count, count); i++)
                 list.Add(queue.Dequeue());
 
@@ -90,15 +100,14 @@ namespace InitialDataUpload
             }
         }
 
-        private List<string> GetListOfUrls(IEnumerable<string> idMatches)
+        private List<string> GetListOfUrls(IEnumerable<RegionId> idMatches)
         {
             List<string> urls = new List<string>();
 
-            foreach(string id in idMatches)
+            foreach(RegionId id in idMatches)
             {
-                // quitar de aqui
                 string apiKey = ConfigurationManager.AppSettings["apiKey"];
-                string requestUri = String.Format("https://lan.api.pvp.net/api/lol/lan/v2.2/match/{0}?api_key={1}", id, apiKey);
+                string requestUri = String.Format("https://{0}.api.pvp.net/api/lol/{1}/v2.2/match/{2}?api_key={3}", id.Region, id.Region.ToLower(), id.Id, apiKey);
                 urls.Add(requestUri);
             }
 
@@ -129,6 +138,7 @@ namespace InitialDataUpload
                 var player = new Player
                 {
                     Rank = dictRank[participant.highestAchievedSeasonTier],
+                    Region = dictRegion[matchData.region],
                     Winner = participant.stats.winner,
                     ItemsBought = itemsBought
                 };
@@ -153,9 +163,15 @@ namespace InitialDataUpload
         private int matchesRequested = 0;
         private string DataUrl { get; set; }
         private IEnumerable<string> fileNames { get; set; }
-        private Queue<string> IDMatches { get; set; }
+        private Queue<RegionId> IDMatches { get; set; }
         public List<APItemsWinRate.Models.Match> Matches { get; set; }
         public AppDbContext Context { get; set; }
+
+        public class RegionId
+        {
+            public string Id { get; set; }
+            public string Region { get; set; }
+        }
 
         // dict to convert regions
         Dictionary<string, Region> dictRegion = new Dictionary<string, Region>()

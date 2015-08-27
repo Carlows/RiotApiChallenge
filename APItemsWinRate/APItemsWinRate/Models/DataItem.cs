@@ -18,5 +18,7 @@ namespace APItemsWinRate.Models
         public virtual List<DataChampion> MostUsedChampionsPostPatch { get; set; }
         public virtual List<DataPerRank> DataPerRankPrePatch { get; set; }
         public virtual List<DataPerRank> DataPerRankPostPatch { get; set; }
+        public virtual List<DataPerRegion> DataPerRegionPrePatch { get; set; }
+        public virtual List<DataPerRegion> DataPerRegionPostPatch { get; set; }
     }
 }

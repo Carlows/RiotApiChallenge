@@ -16,6 +16,7 @@ namespace APItemsWinRate.Models
         public int Id { get; set; }
 
         public Rank Rank { get; set; }
+        public Region Region { get; set; }
         public bool Winner { get; set; }
 
         [Required]
