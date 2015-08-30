@@ -8,8 +8,8 @@ Check out the demo here: http://carloseme.xyz/APIChallenge
 
 #### Who were the extraordinary people who made this app?
 
-Carlos Martinez - CarlosEME -> LAN / VENEZUELA
-Steffany Aldama - Steffzor -> LAN / VENEZUELA
+**Carlos Martinez** - CarlosEME -> LAN / VENEZUELA    
+**Steffany Aldama** - Steffzor -> LAN / VENEZUELA
 
 #### So what is this all about?
 
