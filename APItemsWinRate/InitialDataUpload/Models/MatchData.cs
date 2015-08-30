@@ -32,5 +32,17 @@ namespace InitialDataUpload.Models
         public string item4 { get; set; }
         public string item5 { get; set; }
         public string item6 { get; set; }
+
+        public int kills { get; set; }
+        public int deaths { get; set; }
+        public int assists { get; set; }
+
+        public int pentaKills { get; set; }
+        public int quadraKills { get; set; }
+        public int tripleKills { get; set; }
+        public int doubleKills { get; set; }
+        
+        public int magicDamageDealt { get; set; }
+        public int largestKillingSpree { get; set; }
     }
 }

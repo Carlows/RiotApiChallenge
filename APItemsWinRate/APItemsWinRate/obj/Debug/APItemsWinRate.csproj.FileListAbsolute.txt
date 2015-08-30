@@ -35,3 +35,5 @@ C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\APItemsWinR
 C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\APItemsWinRate\bin\Ninject.Web.Common.xml
 C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\APItemsWinRate\bin\Ninject.Web.Mvc.xml
 C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\APItemsWinRate\obj\Debug\APItemsWinRate.csprojResolveAssemblyReference.cache
+C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\APItemsWinRate\obj\Debug\APItemsWinRate.Migrations.firstmigration.resources
+C:\Users\Carlos\documents\visual studio 2013\Projects\APItemsWinRate\APItemsWinRate\obj\Debug\APItemsWinRate.csproj.GenerateResource.Cache

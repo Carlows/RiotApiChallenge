@@ -18,7 +18,7 @@ namespace InitialDataUpload
 {
     class DataUpload
     {
-        public DataUpload(string dataurl)
+        public DataUpload(string dataurl, AppDbContext context, MatchesDBContext mcontext)
         {
             DataUrl = dataurl;
             fileNames = Directory.GetFiles(DataUrl, "*.json")
@@ -27,8 +27,9 @@ namespace InitialDataUpload
 
             // first string for id, second for region
             IDMatches = new Queue<RegionId>();
-            Matches = new List<APItemsWinRate.Models.Match>();
-            Context = new AppDbContext();
+            Matches = new List<InitialDataUpload.Models.Match>();
+            Context = context;
+            MatchesContext = mcontext;
 
             ServicePointManager.DefaultConnectionLimit = 10000;
         }
@@ -42,7 +43,7 @@ namespace InitialDataUpload
             {
                 var fileids = DeserializeFile(filename);
                 System.Text.RegularExpressions.Match match = regex.Match(filename);
-                foreach(string id in fileids.Take(100))
+                foreach(string id in fileids.Skip(4000).Take(1000))
                 {
                     var regionid = new RegionId()
                     {
@@ -66,7 +67,7 @@ namespace InitialDataUpload
 
         public void GetDataFromUrl()
         {
-            int howManyRequestsAtATime = 100;
+            int howManyRequestsAtATime = 10;
             HttpSocket socket = new HttpSocket();
             var matchDataList = new List<MatchData>();
 
@@ -98,6 +99,23 @@ namespace InitialDataUpload
                     AddMatch(match);
                 }
             }
+
+            MatchesContext.Configuration.AutoDetectChangesEnabled = false;
+            MatchesContext.Configuration.ValidateOnSaveEnabled = false;
+            int count = 0;
+            foreach(InitialDataUpload.Models.Match match in Matches)
+            {
+                MatchesContext.Matches.Add(match);
+                count++;
+
+                if(count % 100 == 0)
+                {
+                    count = 0;
+                    MatchesContext.SaveChanges();
+                }
+            }
+
+            MatchesContext.SaveChanges();
         }
 
         private List<string> GetListOfUrls(IEnumerable<RegionId> idMatches)
@@ -117,14 +135,14 @@ namespace InitialDataUpload
         private void AddMatch(MatchData matchData)
         {
             var regex = new Regex(@"^([0-9].11)");
-            var match = new APItemsWinRate.Models.Match();
+            var match = new InitialDataUpload.Models.Match();
             match.MatchId = matchData.matchId;
             match.Is_Ranked = matchData.queueType.Equals("RANKED_SOLO_5x5");
             match.Match_Region = dictRegion[matchData.region];
             match.Pre_Change = regex.IsMatch(matchData.matchVersion);
             match.Players = new List<Player>();
 
-            foreach (Participant participant in matchData.participants)
+            foreach (InitialDataUpload.Models.Participant participant in matchData.participants)
             {
                 var itemsBought = string.Format("{0},{1},{2},{3},{4},{5},{6}",
                     participant.stats.item0,
@@ -140,10 +158,18 @@ namespace InitialDataUpload
                     Rank = dictRank[participant.highestAchievedSeasonTier],
                     Region = dictRegion[matchData.region],
                     Winner = participant.stats.winner,
-                    ItemsBought = itemsBought
+                    ItemsBought = itemsBought,
+                    Kills = participant.stats.kills,
+                    Deaths = participant.stats.deaths,
+                    Assists = participant.stats.assists,
+                    TripleKills = participant.stats.tripleKills,
+                    QuadraKills = participant.stats.quadraKills,
+                    PentaKills = participant.stats.pentaKills,
+                    MagicDamageDealt = participant.stats.magicDamageDealt,
+                    LargestKillingSpree = participant.stats.largestKillingSpree
                 };
 
-                player.ChampionUsed = Context.Champions.Where(c => c.ChampionId == participant.championId).Single();
+                player.ChampionUsed = MatchesContext.Champions.Where(c => c.ChampionId == participant.championId).Single();
                 match.Players.Add(player);
             }
 
@@ -164,8 +190,9 @@ namespace InitialDataUpload
         private string DataUrl { get; set; }
         private IEnumerable<string> fileNames { get; set; }
         private Queue<RegionId> IDMatches { get; set; }
-        public List<APItemsWinRate.Models.Match> Matches { get; set; }
+        public List<InitialDataUpload.Models.Match> Matches { get; set; }
         public AppDbContext Context { get; set; }
+        public MatchesDBContext MatchesContext { get; set; }
 
         public class RegionId
         {

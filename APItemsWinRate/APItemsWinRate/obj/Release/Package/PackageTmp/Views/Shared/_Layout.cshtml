@@ -6,28 +6,11 @@
     <title>Riot App Demo</title>
     <link href="~/Content/bootstrap-cosmo.min.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
     <link href="~/Content/angular-chart.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 <body ng-app="itemsApp">
-    <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Riot App Demo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
+    
     <div ng-controller="backgroundCtrl">
         <!-- the background video tutorial! http://slicejack.com/creating-a-fullscreen-html5-video-background-with-css/ -->
         <div class="fullscreen-bg">

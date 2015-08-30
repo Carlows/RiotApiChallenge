@@ -59,7 +59,12 @@
     <Compile Include="DataAnalysis.cs" />
     <Compile Include="DataUpload.cs" />
     <Compile Include="HttpSocket.cs" />
+    <Compile Include="MatchesDBContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Champion.cs" />
+    <Compile Include="Models\Match.cs" />
     <Compile Include="Models\MatchData.cs" />
+    <Compile Include="Models\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

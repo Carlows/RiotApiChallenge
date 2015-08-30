@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace APItemsWinRate.Models
+namespace InitialDataUpload.Models
 {
     public class Champion
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ChampionId { get; set; }
         public string Name { get; set; }
-        public string Key { get; set; }
     }
-
 }

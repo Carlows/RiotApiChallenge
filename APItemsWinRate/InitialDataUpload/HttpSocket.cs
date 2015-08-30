@@ -21,8 +21,10 @@ namespace InitialDataUpload
             request.ContentType = "application/json; charset=utf-8";
             request.Method = WebRequestMethods.Http.Get;
             request.Accept = "application/json";
-            request.Proxy = null;
+            request.Proxy = System.Net.WebRequest.DefaultWebProxy;
+            request.Credentials = CredentialCache.DefaultCredentials;
             request.Timeout = 3000;
+
             try
             {
                 request.BeginGetResponse(iar =>
@@ -30,10 +32,10 @@ namespace InitialDataUpload
                     HttpWebResponse response = null;
                     try
                     {
+                        Console.WriteLine(string.Format("Request {0} arrived succesfully", ++RequestCount));
                         response = (HttpWebResponse)request.EndGetResponse(iar);
                         using (var reader = new StreamReader(response.GetResponseStream()))
                         {
-                            Console.WriteLine(string.Format("Request {0} arrived succesfully", ++RequestCount));
                             tcs.SetResult(reader.ReadToEnd());
                         }
                     }

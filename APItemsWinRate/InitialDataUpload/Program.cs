@@ -15,25 +15,30 @@ namespace InitialDataUpload
         {
             // Please, run the website project before this project
             // that way, champion and item data will be already on the database
+            var context = new AppDbContext();
+            var mcontext = new MatchesDBContext();
+            bool downloading = false;
 
-            string path = @"C:\RiotMatches";
-            DataUpload dataParsing = new DataUpload(path);
-            dataParsing.ParseJsonFiles();
-            dataParsing.GetDataFromUrl();
-            
-            Console.WriteLine("Done.");
+            if (downloading)
+            {
+                string path = @"C:\RiotMatches\Current";
+                DataUpload dataParsing = new DataUpload(path, context, mcontext);
+                dataParsing.ParseJsonFiles();
+                dataParsing.GetDataFromUrl();
 
-            Console.WriteLine("Proceeding to create the analysis of all the data uploaded.");
-            // Creating a data record
-            // such context, where did that come from O_o
-            // such code
-            // such wow
-            // i'm too sleepy to fix it!
-            DataAnalysis data = new DataAnalysis(dataParsing.Context, dataParsing.Matches);
-            data.CreateRecord();
-            data.CreateCalculatedRecord();
+                Console.WriteLine("Done.");
+            }
+            else
+            {
+                var matches = mcontext.Matches.ToList();
 
-            Console.WriteLine("Done. (Maybe, just check for errors(?)");
+                Console.WriteLine("Proceeding to create the analysis of all the data uploaded.");
+                DataAnalysis data = new DataAnalysis(context, mcontext, matches);
+                data.CreateRecord();
+                data.CreateCalculatedRecord();
+
+                Console.WriteLine("Done. (Maybe, just check for errors(?)");
+            }
 
             Console.ReadKey();
         }

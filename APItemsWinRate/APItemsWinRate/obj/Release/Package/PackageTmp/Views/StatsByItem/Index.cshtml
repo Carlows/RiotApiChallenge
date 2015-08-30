@@ -15,79 +15,172 @@
         </div>
     </div>
     <div class="row startindex">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default transparent panelAnimation" ng-if="itemSelected">
                 <div class="panel-body nopadding">
-                    <div class="header-panel container-custom">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img class="img-rounded-custom" width="80" height="80" ng-src="http://ddragon.leagueoflegends.com/cdn/5.13.1/img/item/{{currentItem.Data.ItemId}}.png">
-                            </div>
-                            <div class="col-md-7">
-                                <h1>{{currentItem.Data.DataPreChange.Name}}</h1>
-                                <ul class="list-inline">
-                                    <li>{{currentItem.Data.DataPreChange.Plaintext}}</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-warning btn-block" ng-click="toggleData()" data-toggle="tooltip" data-placement="bottom" title="Click me!" tooltip>{{dataVersion}}</button>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="body-panel">
+                    <div class="body-panel">                        
                         <div class="centerPanel" ng-show="dataPreChange">
                             <div class="row">
-                                <div class="col-md-5">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body text-center">
-                                            <h3>How to build</h3>
-                                            <ul class="list-inline">
-                                                <li ng-repeat="itemid in currentItem.Data.DataPreChange.From"><img class="img-rounded-custom" ng-src="http://ddragon.leagueoflegends.com/cdn/5.13.1/img/item/{{itemid}}.png"></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <div class="col-md-6 text-center">
-                                                <h3>Extra Gold</h3>
-                                                <h1>{{currentItem.Data.DataPreChange.Gold.Base}}</h1>
-                                            </div>
-                                            <div class="col-md-6 text-center">
-                                                <h3>Total Gold</h3>
-                                                <h1>{{currentItem.Data.DataPreChange.Gold.Total}}</h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body text-center">
-                                            <h3>Times Bought</h3>
-
-                                            <div class="cv">
-
-                                                <knob knob-data="currentItem.PrePatch" knob-options="options"></knob>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body text-center">
-                                            <h3>Most used on</h3>
-                                            <canvas class="chart chart-doughnut" data="currentItem.MostUsedChampionsPrePatchData" labels="currentItem.MostUsedChampionsPrePatchLabels" legend="true" options="chartOptions"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-12">
+
+                                    <div class="panel panel-default panel-header">
+                                        <div class="panel-body">
+                                            <div class="col-md-2 text-center panelimg">
+                                                <img class="img-rounded-custom" width="100" height="100" ng-src="http://ddragon.leagueoflegends.com/cdn/5.13.1/img/item/{{currentItem.Data.ItemId}}.png">
+                                            </div>
+                                            <div class="col-md-7">
+                                                <h1>{{currentItem.Data.DataPreChange.Name}}</h1>
+                                                <ul class="list-inline">
+                                                    <li style="text-align:justify;">{{currentItem.Data.DataPreChange.Description}}</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-warning btn-block" ng-click="toggleData()" data-toggle="tooltip" data-placement="bottom" title="Click me!" tooltip>{{dataVersion}}</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-center">
+                                                    <h3>Times Bought</h3>
+
+                                                    <div class="cv">
+
+                                                        <knob knob-data="currentItem.PrePatch" knob-options="options"></knob>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <h3>Win Rate</h3>
+
+                                                    <div class="cv">
+
+                                                        <knob knob-data="currentItem.WinRatePrePatch" knob-options="options"></knob>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-center">
+                                                    <h3>Most used on</h3>
+                                                    <div style="margin-top:30px;">
+                                                        <canvas class="chart chart-doughnut" data="currentItem.MostUsedChampionsPrePatchData" labels="currentItem.MostUsedChampionsPrePatchLabels" legend="true" options="chartOptions"></canvas>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-center">
+                                                    <h3>How to build</h3>
+                                                    <ul class="list-inline">
+                                                        <li ng-repeat="itemid in currentItem.Data.DataPreChange.From"><img class="img-rounded-custom" ng-src="http://ddragon.leagueoflegends.com/cdn/5.13.1/img/item/{{itemid}}.png"></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="col-md-6 text-center">
+                                                        <h3>Extra Gold</h3>
+                                                        <h1 class="h1-gold">{{currentItem.Data.DataPreChange.Gold.Base}}</h1>
+                                                    </div>
+                                                    <div class="col-md-6 text-center">
+                                                        <h3>Total Gold</h3>
+                                                        <h1 class="h1-gold">{{currentItem.Data.DataPreChange.Gold.Total}}</h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="panel panel-default noborder">
+                                        <div class="panel-body text-center paddingChamp" style="background-color:#000;">
+                                            <img class="bgImg" ng-src="{{currentItemChampionBgUrlPrePatch}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="padding-left:0; padding-right:0;">
+                                    <div class="col-md-4">
+                                        <div class="alert alert-info text-center">
+                                            <h3>Kills</h3>
+                                            <h1>{{currentItem.KDAAvgPrePatch.Kills}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-info text-center">
+                                            <h3>Deaths</h3>
+                                            <h1>{{currentItem.KDAAvgPrePatch.Deaths}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-info text-center">
+                                            <h3>Assists</h3>
+                                            <h1>{{currentItem.KDAAvgPrePatch.Assists}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-success text-center">
+                                            <h3>Penta Kills</h3>
+                                            <h1>{{currentItem.MultiKillsPrePatch.PentaKills}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-success text-center">
+                                            <h3>Quadra Kills</h3>
+                                            <h1>{{currentItem.MultiKillsPrePatch.QuadraKills}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-success text-center">
+                                            <h3>Triple Kills</h3>
+                                            <h1>{{currentItem.MultiKillsPrePatch.TripleKills}}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body text-center">
+                                            <h3>Most Magic Damage Dealt</h3>
+
+                                            <ul class="list-inline text-center custom-list">
+                                                <li ng-repeat="champion in currentItem.ChampionsMostDmgPrePatch"><img width="55" height="55" class="img-rounded-custom img-cursor" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{champion.Key}}.png" ng-click="selectChampion(champion)"></li>
+                                            </ul>
+                                            <div class="well custom-well2 text-center col-md-12" ng-hide="championSelected">
+                                                <h3>Select a champion</h3>
+                                            </div>
+                                            <div class="dmgInfo well custom-well text-left col-md-12" ng-show="championSelected">
+                                                <div class="col-md-4">
+                                                    <img width="80" height="80" class="img-rounded-custom img-cursor" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{selectedChampion.Key}}.png" ng-click="selectChampion(champion)">
+                                                </div>
+                                                <div class="col-md-8 text-center">
+                                                    <h4 style="font-size:18px;">Average Damage Dealt by <b>{{selectedChampion.Name}}</b></h4>
+                                                    <div class="col-md-12 text-center">
+                                                        <b class="" style="font-size:24px;">{{selectedChampion.Value}}</b>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-body text-center">
                                             <h3>Usage per Rank</h3>
@@ -95,9 +188,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-body text-center">
                                             <h3>Usage per Region</h3>
@@ -109,55 +200,168 @@
                         </div>
                         <div class="centerPanel" ng-show="dataPostChange">
                             <div class="row">
-                                <div class="col-md-5">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body text-center">
-                                            <h3>How to build</h3>
-                                            <ul class="list-inline">
-                                                <li ng-repeat="itemid in currentItem.Data.DataPostChange.From"><img class="img-rounded-custom" ng-src="http://ddragon.leagueoflegends.com/cdn/5.13.1/img/item/{{itemid}}.png"></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <div class="col-md-6 text-center">
-                                                <h3>Extra Gold</h3>
-                                                <h1>{{currentItem.Data.DataPostChange.Gold.Base}}</h1>
-                                            </div>
-                                            <div class="col-md-6 text-center">
-                                                <h3>Total Gold</h3>
-                                                <h1>{{currentItem.Data.DataPostChange.Gold.Total}}</h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body text-center">
-                                            <h3>Times Bought</h3>
-
-                                            <div class="cv">
-
-                                                <knob knob-data="currentItem.PostPatch" knob-options="options"></knob>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body text-center">
-                                            <h3>Most used on</h3>
-                                            <canvas class="chart chart-doughnut" data="currentItem.MostUsedChampionsPostPatchData" labels="currentItem.MostUsedChampionsPostPatchLabels" legend="true" options="chartOptions"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-12">
+
+                                    <div class="panel panel-default panel-header">
+                                        <div class="panel-body">
+                                            <div class="col-md-2 text-center panelimg">
+                                                <img class="img-rounded-custom" width="100" height="100" ng-src="http://ddragon.leagueoflegends.com/cdn/5.13.1/img/item/{{currentItem.Data.ItemId}}.png">
+                                            </div>
+                                            <div class="col-md-7">
+                                                <h1>{{currentItem.Data.DataPostChange.Name}}</h1>
+                                                <ul class="list-inline">
+                                                    <li style="text-align:justify;">{{currentItem.Data.DataPostChange.Description}}</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-warning btn-block" ng-click="toggleData()" data-toggle="tooltip" data-placement="bottom" title="Click me!" tooltip>{{dataVersion}}</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-center">
+                                                    <h3>Times Bought</h3>
+
+                                                    <div class="cv">
+
+                                                        <knob knob-data="currentItem.PostPatch" knob-options="options"></knob>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <h3>Win Rate</h3>
+
+                                                    <div class="cv">
+
+                                                        <knob knob-data="currentItem.WinRatePostPatch" knob-options="options"></knob>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-center">
+                                                    <h3>Most used on</h3>
+                                                    <div style="margin-top:30px;">
+                                                        <canvas class="chart chart-doughnut" data="currentItem.MostUsedChampionsPostPatchData" labels="currentItem.MostUsedChampionsPostPatchLabels" legend="true" options="chartOptions"></canvas>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body text-center">
+                                                    <h3>How to build</h3>
+                                                    <ul class="list-inline">
+                                                        <li ng-repeat="itemid in currentItem.Data.DataPostChange.From"><img class="img-rounded-custom" ng-src="http://ddragon.leagueoflegends.com/cdn/5.13.1/img/item/{{itemid}}.png"></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="col-md-6 text-center">
+                                                        <h3>Extra Gold</h3>
+                                                        <h1 class="h1-gold">{{currentItem.Data.DataPostChange.Gold.Base}}</h1>
+                                                    </div>
+                                                    <div class="col-md-6 text-center">
+                                                        <h3>Total Gold</h3>
+                                                        <h1 class="h1-gold">{{currentItem.Data.DataPostChange.Gold.Total}}</h1>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="panel panel-default noborder">
+                                        <div class="panel-body text-center paddingChamp" style="background-color:#000;">
+                                            <img class="bgImg" ng-src="{{currentItemChampionBgUrlPostPatch}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="padding-left:0; padding-right:0;">
+                                    <div class="col-md-4">
+                                        <div class="alert alert-info text-center">
+                                            <h3>Kills</h3>
+                                            <h1>{{currentItem.KDAAvgPostPatch.Kills}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-info text-center">
+                                            <h3>Deaths</h3>
+                                            <h1>{{currentItem.KDAAvgPostPatch.Deaths}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-info text-center">
+                                            <h3>Assists</h3>
+                                            <h1>{{currentItem.KDAAvgPostPatch.Assists}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-success text-center">
+                                            <h3>Penta Kills</h3>
+                                            <h1>{{currentItem.MultiKillsPostPatch.PentaKills}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-success text-center">
+                                            <h3>Quadra Kills</h3>
+                                            <h1>{{currentItem.MultiKillsPostPatch.QuadraKills}}</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="alert alert-success text-center">
+                                            <h3>Triple Kills</h3>
+                                            <h1>{{currentItem.MultiKillsPostPatch.TripleKills}}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body text-center">
+                                            <h3>Most Magic Damage Dealt</h3>
+
+                                            <ul class="list-inline text-center custom-list">
+                                                <li ng-repeat="champion in currentItem.ChampionsMostDmgPostPatch"><img width="55" height="55" class="img-rounded-custom img-cursor" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{champion.Key}}.png" ng-click="selectChampion(champion)"></li>
+                                            </ul>
+                                            <div class="well custom-well2 text-center col-md-12" ng-hide="championSelected">
+                                                <h3>Select a champion</h3>
+                                            </div>
+                                            <div class="dmgInfo well custom-well text-left col-md-12" ng-show="championSelected">
+                                                <div class="col-md-4">
+                                                    <img width="80" height="80" class="img-rounded-custom img-cursor" ng-src="http://ddragon.leagueoflegends.com/cdn/5.16.1/img/champion/{{selectedChampion.Key}}.png" ng-click="selectChampion(champion)">
+                                                </div>
+                                                <div class="col-md-8 text-center">
+                                                    <h4 style="font-size:18px;">Average Damage Dealt by <b>{{selectedChampion.Name}}</b></h4>
+                                                    <div class="col-md-12 text-center">
+                                                        <b class="" style="font-size:24px;">{{selectedChampion.Value}}</b>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-body text-center">
                                             <h3>Usage per Rank</h3>
@@ -165,18 +369,16 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-body text-center">
-                                            <h3>Usage per Rank</h3>
+                                            <h3>Usage per Region</h3>
                                             <canvas class="chart chart-bar" data="currentItem.ItemDataByRegionPostPatchData" labels="currentItem.ItemDataByRegionPostPatchLabels" colours="barChartOptions.otherColours" options="barChartOptions.otherOptions"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>                      
+                        </div>
                     </div>
                 </div>
             </div>
@@ -189,7 +391,7 @@
 
 
 @section scripts{
-    
+
     <script type="text/javascript">
         var app = angular.module("itemsApp");
 

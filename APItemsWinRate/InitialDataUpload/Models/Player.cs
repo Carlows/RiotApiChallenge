@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APItemsWinRate.Models
+namespace InitialDataUpload.Models
 {
     public class Player
     {

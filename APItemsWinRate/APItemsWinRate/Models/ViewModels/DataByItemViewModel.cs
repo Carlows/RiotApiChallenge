@@ -34,6 +34,22 @@ namespace APItemsWinRate.Models.ViewModels
         public int[] ItemDataByRegionPrePatchData { get; set; }
         public int[] ItemDataByRegionPostPatchData { get; set; }
 
+        // KDA
+        public KDAAverage KDAAvgPrePatch { get; set; }
+        public KDAAverage KDAAvgPostPatch { get; set; }
+
+        // Multikills
+        public MultiKills MultiKillsPrePatch { get; set; }
+        public MultiKills MultiKillsPostPatch { get; set; }
+
+        // WinRate
+        public int WinRatePrePatch { get; set; }
+        public int WinRatePostPatch { get; set; }
+
+        // Most Magic Dmg Champions
+        public List<DataChampion> ChampionsMostDmgPrePatch { get; set; }
+        public List<DataChampion> ChampionsMostDmgPostPatch { get; set; }
+
         public ItemDataViewModel Data { get; set; }
     }
 }
