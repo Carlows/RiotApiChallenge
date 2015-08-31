@@ -8,6 +8,7 @@ Check out the demo here: http://carloseme.xyz/APIChallenge
 First of all...
 
 ![ez](/ezwin.png)
+
 EZ WIN GG
 
 #### Who were the extraordinary people who made this app?
