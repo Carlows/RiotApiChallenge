@@ -5,6 +5,10 @@
 
 Check out the demo here: http://carloseme.xyz/APIChallenge
 
+First of all...
+
+![ez](/ezwin.png)
+EZ WIN GG
 
 #### Who were the extraordinary people who made this app?
 
@@ -15,7 +19,7 @@ Check out the demo here: http://carloseme.xyz/APIChallenge
 
 We wanted to study the usage for each item before and after their rework (from patch 5.13), we want to make clear that the data shown is not the whole set of data Rito gave us, we we're only able to get a part of it (around 80k matches, 40k before and 40k after rework) because of internet connection issues it was impossible for us to gather all the data.
 
-The usage is being shown by percentage, the KDA and most damage are represented as average, so even though it is not the whole data, the numbers represent pretty much what happened to those items around the patchs. Also, we only used a list of main AP Champions, champions who depend of these items.
+The usage is being shown by percentage, the KDA and most damage are represented as average, so even though it is not the whole data, the numbers represent pretty much what happened to those items around the patchs. Also, we only used a list of main AP Champions, champions who depend of these items. We tried to get the stats that make the most sense for our category.
 
 We would've like to have more time to add more exciting features to this, time runs fast, we did the best we could :P
 
