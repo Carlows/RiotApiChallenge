@@ -18,9 +18,9 @@ EZ WIN GG
 
 #### So what is this all about?
 
-We wanted to study the usage for each item before and after their rework (from patch 5.13), we want to make clear that the data shown is not the whole set of data Rito gave us, we we're only able to get a part of it (around 80k matches, 40k before and 40k after rework) because of internet connection issues it was impossible for us to gather all the data.
+We wanted to study the usage for each item before and after their rework (from patch 5.13), we want to make clear that the data shown is not the whole set of data Rito gave us, we we're only able to get a part of it (around 80k matches, 40k before and 40k after rework) because of internet connection issues (yes, we have a 1mb conection, so we download at a speed of 100kbps) it was impossible for us to gather all the data.
 
-The usage is being shown by percentage, the KDA and most damage are represented as average, so even though it is not the whole data, the numbers represent pretty much what happened to those items around the patchs. Also, we only used a list of main AP Champions, champions who depend of these items. We tried to get the stats that make the most sense for our category.
+The usage is being shown by percentage, the KDA and most damage are represented as average, so even though it is not the whole data, the numbers represent pretty much what happened to those items around the patchs. Also, we only used a list of main AP Champions, champions who depend of these items (you can see that list of champions we used on the 'champions.txt' file. We tried to get the stats that make the most sense for our category.
 
 We would've like to have more time to add more exciting features to this, time runs fast, we did the best we could :P
 
