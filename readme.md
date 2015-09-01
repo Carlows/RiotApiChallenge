@@ -9,7 +9,7 @@ First of all...
 
 ![ez](/ezwin.png)
 
-EZ WIN GG
+Teemo is op.
 
 #### Who were the extraordinary people who made this app?
 
