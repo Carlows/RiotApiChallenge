@@ -14,9 +14,9 @@ Welcome screen
 
 Items
 
-![item1](/item1.png)
-![item2](/item2.png)
-![item3](/item3.png)
+![item1](/items1.png)
+![item2](/items2.png)
+![item3](/items3.png)
 
 First of all...
 
